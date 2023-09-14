@@ -2,15 +2,13 @@ class Router:
     def __init__(self):
         self.routes = {}
 
-    def register_controller(self, path, controller, model, view):
+    def register(self, path, controller, model, view):
+        model = model(); view = view()
         self.routes[path] = controller(model, view)
 
     def resolve(self, path):
-        callback = self.routes.get(path)
-        if callback:
-            return callback
-        return self.default_controller
-
-    def default_controller(self, *args, **kwargs):
-        status = 'Controller not found'
-        return status
+        if self.routes.get(path):
+            controller = self.routes[path]
+            return controller
+        else:
+            raise ValueError("Cannot find path", path)

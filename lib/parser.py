@@ -48,7 +48,7 @@ class Parser(object):
                 )       
 
         parser_personel = subparsers.add_parser(
-                'personel',
+                'product',
                 choices=[ 'add', 'list', 'update', 'delete'], 
                 help='Add, list, update, or delete personel'
         )

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from sys import argv
+from sys import argv, dont_write_bytecode
 
 from lib.parser import Parser
 from lib.router import Router
@@ -9,30 +9,18 @@ from lib.view import ConsoleView
 from lib.controller import ProductController, PersonnelController
 
 
-#def application(args)):
-#    
-#    router = Router()
-#    router.register_controller('personel', PersonnelController, PersonnelModel, ConsoleView)
-#    router.register_controller('product', ProductController, ProductModel, ConsoleView)
-      
-    #for route in router.routes:
-    #    print(route)
-    #    for path in args:
-    #        if path == route:
-#    return router.resolve(args)
-
 def main():
     router = Router()
     name = ""   
  
-    #router.register_controller('personnel', PersonnelController, PersonnelModel, ConsoleView)
-    router.register_controller('product', ProductController, ProductModel, ConsoleView)
+    router.register("product", ProductController, ProductModel, ConsoleView)
 
-    for arg in argv[1:]:
-        name = arg
+    name = argv[1]
 
     controller = router.resolve(name)
-    controller.show_items()
+    if hasattr(controller, "show_items"):
+        controller.show_items()
 
 if __name__ == "__main__":
+    dont_write_bytecode = True
     main()
